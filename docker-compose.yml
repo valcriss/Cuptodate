@@ -1,0 +1,27 @@
+version: '2'
+services:
+  cuptodate:
+    image: yiisoftware/yii2-php:8.1-apache
+    container_name: "cuptodate"
+    volumes:
+     - ./:/app:delegated
+     - //var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - '8001:80'
+    environment:
+      DATABASE_HOST: "database"
+      DATABASE_NAME: "cuptodate"
+      DATABASE_USER: "root"
+      DATABASE_PASSWORD: "secretpassword"
+      DOCKER_API_VERSION: "v1.41"
+  #********************************************
+  # DATABASE
+  #********************************************
+  database:
+    image: mysql:8.0
+    container_name: "database"
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: cuptodate
+      MYSQL_ROOT_PASSWORD: secretpassword
