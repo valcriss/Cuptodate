@@ -26,6 +26,7 @@ jobs:
         # Name of the docker repository
         repo_name: cuptodate
         # Docker user
+        org_name: danielsilvestre37
         docker_username: danielsilvestre37
         # Docker password
         docker_password: ${{ secrets.DOCKER_PASSWORD }}
