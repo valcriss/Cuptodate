@@ -14,5 +14,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag danielsilvestre37/cuptodate:latest
+    - name: Docker Build Tag Publish
+      # You may pin to the exact commit or the version.
+      # uses: bitovi/github-actions-docker-publish@def3cb9a3ef842b230bf575dc4f5e280ae6a6896
+      uses: bitovi/github-actions-docker-publish@v1.0.7
+      with:
+        # Tag to override default Logic
+        image_tag: danielsilvestre37/cuptodate:latest
+        # Use the SHA for the tag.  Overrides the default logic.
+        use_sha: false
+        # Name of the docker repository
+        repo_name: cuptodate
+        # Docker user
+        docker_username: danielsilvestre37
+        # Docker password
+        docker_password: ${{ secrets.DOCKER_PASSWORD }}
