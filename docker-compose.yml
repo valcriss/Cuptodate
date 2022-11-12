@@ -1,11 +1,10 @@
 version: '2'
 services:
   cuptodate:
-    image: yiisoftware/yii2-php:8.1-apache
+    build: .
     container_name: "cuptodate"
     volumes:
-     - ./:/app:delegated
-     - //var/run/docker.sock:/var/run/docker.sock
+     - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - '8001:80'
     environment:
