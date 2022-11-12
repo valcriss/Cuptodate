@@ -20,7 +20,7 @@ jobs:
       uses: bitovi/github-actions-docker-publish@v1.0.7
       with:
         # Tag to override default Logic
-        image_tag: danielsilvestre37/cuptodate:latest
+        image_tag: latest
         # Use the SHA for the tag.  Overrides the default logic.
         use_sha: false
         # Name of the docker repository
