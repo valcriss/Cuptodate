@@ -46,14 +46,14 @@ class RepositoriesUpdater
             $databaseRecord = new Repository();
             $databaseRecord->name = $repository->name;
             $databaseRecord->creationDate = (new \DateTime())->format("Y-m-d H:i:s");
+            $databaseRecord->lookupDate = null;
+            $databaseRecord->remoteDigest = null;
         }
-
-
+        
         $databaseRecord->namespace = $repository->namespace;
         $databaseRecord->repository = $repository->repository;
         $databaseRecord->tag = $repository->tag;
-        $databaseRecord->lookupDate = null;
-        $databaseRecord->remoteDigest = null;
+
         $databaseRecord->updateDate = (new \DateTime())->format("Y-m-d H:i:s");
 
         return $databaseRecord->save();
