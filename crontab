@@ -1,2 +1,4 @@
-* * * * * root /app/yii update /var/log/update.log 2>&1
+* * * * * root /app/yii update
 # Don't remove the empty line at the end of this file. It is required to run the cron job
+
+
