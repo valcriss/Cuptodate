@@ -21,25 +21,35 @@ class DockerRepository
 
     public static function factory(string $repositoryTag)
     {
-        $hasNamespace = (strpos($repositoryTag, "/") !== false);
-        $hasTag = (strpos($repositoryTag, ":") !== false);
-
-        $namespace = ($hasNamespace) ? explode("/", $repositoryTag)[0] : "library";
-
-        if ($hasNamespace && $hasTag) {
-            $repository = explode(":", explode("/", $repositoryTag)[1])[0];
-            $tag = explode(":", explode("/", $repositoryTag)[1])[1];
-        } elseif (!$hasNamespace && $hasTag) {
-            $repository = explode(":", $repositoryTag)[0];
-            $tag = explode(":", $repositoryTag)[1];
-        } elseif ($hasNamespace && !$hasTag) {
-            $repository = explode("/", $repositoryTag)[1];
-            $tag = "latest";
-        } else {
-            $repository = $repositoryTag;
-            $tag = "latest";
-        }
+        $namespace = self::getNamespace($repositoryTag);
+        $repository = self::getRepository($repositoryTag);
+        $tag = self::getTag($repositoryTag);
 
         return new DockerRepository($repositoryTag, $namespace, $repository, $tag);
+    }
+
+    private static function getNamespace(string $repositoryTag): string
+    {
+        $hasNamespace = (strpos($repositoryTag, "/") !== false);
+        if (!$hasNamespace) return "library";
+        $tab = explode("/", $repositoryTag);
+
+        return $tab[count($tab) - 1];
+    }
+
+    private static function getRepository(string $repositoryTag): string
+    {
+        $hasNamespace = (strpos($repositoryTag, "/") !== false);
+        $hasTag = (strpos($repositoryTag, ":") !== false);
+        $startingIndex = ($hasNamespace) ? strrpos($repositoryTag, "/") : 0;
+        $endIndex = ($hasTag) ? strpos($repositoryTag, ":") : strlen($repositoryTag);
+        return substr($repositoryTag, $startingIndex, $endIndex - $startingIndex);
+    }
+
+    private static function getTag(string $repositoryTag): string
+    {
+        $hasTag = (strpos($repositoryTag, ":") !== false);
+        if (!$hasTag) return "latest";
+        return explode(":", $repositoryTag)[1];
     }
 }
