@@ -6,6 +6,6 @@ ADD https://raw.githubusercontent.com/nickjj/wait-until/v0.2.0/wait-until /usr/l
 RUN chmod +x /usr/local/bin/wait-until && chmod +x /app/entrypoint.sh  && chmod +x /app/yii
 
 ADD ./crontab /etc/cron.d/update-cron
-RUN chmod 0644 /etc/cron.d/update-cron && touch /var/log/update.log
+RUN chmod 0644 /etc/cron.d/update-cron && touch /var/log/update.log && chmod -R www-data:www-data /app
 
 CMD ["/app/entrypoint.sh"]
