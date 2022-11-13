@@ -29,7 +29,7 @@ class DockerClient
         foreach ($containers as $container) {
             $image = $imageCollection->get($container['ImageID']);
             if ($image !== null) {
-                $result[$container['Id']] = DockerContainer::factory($container, $image);
+                $result[] = DockerContainer::factory($container, $image);
             }
         }
 

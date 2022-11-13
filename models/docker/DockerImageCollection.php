@@ -15,7 +15,7 @@ class DockerImageCollection
             foreach ($images as $image) {
                 $id = $image['Id'];
                 $digest = explode("@", $image['RepoDigests'][0])[1];
-                $this->records[$id] = new DockerImage($id, $digest, DockerRepository::factory($image['RepoTags'][0]));
+                $this->records[] = new DockerImage($id, $digest, DockerRepository::factory($image['RepoTags'][0]));
             }
         }
     }
