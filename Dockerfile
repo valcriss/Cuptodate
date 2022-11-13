@@ -7,7 +7,7 @@ RUN chmod +x /usr/local/bin/wait-until && chmod +x /app/entrypoint.sh  && chmod 
 
 COPY crontab /etc/crontab
 
-RUN useradd -M cuptodate && usermod -a -G www-data cuptodate
+RUN useradd cuptodate --home /home/cuptodate --create-home --groups www-data
 RUN chown -R cuptodate:www-data /app
 
 CMD ["/app/entrypoint.sh"]
