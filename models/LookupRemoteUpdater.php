@@ -8,14 +8,15 @@ use app\models\database\Repository;
 
 class LookupRemoteUpdater
 {
-    private const DO_NOT_UPDATE_BEFORE = 60 * 60;
+
 
     public static function update()
     {
+        $doNotLookForUpdateBefore = (getenv("DO_NOT_LOOK_FOR_UPDATE_BEFORE") !== null && is_int(getenv("DO_NOT_LOOK_FOR_UPDATE_BEFORE"))) ? intval(getenv("DO_NOT_LOOK_FOR_UPDATE_BEFORE")) : 30;
         $repositories = Repository::find()->all();
         /** @var Repository[] $repositories */
         foreach ($repositories as $repository) {
-            if ($repository->lookupDate !== null && (new \DateTime())->getTimestamp() - strtotime($repository->lookupDate) < self::DO_NOT_UPDATE_BEFORE) continue;
+            if ($repository->lookupDate !== null && (new \DateTime())->getTimestamp() - strtotime($repository->lookupDate) < ($doNotLookForUpdateBefore * 60)) continue;
             self::updateRepository($repository);
         }
     }

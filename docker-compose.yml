@@ -13,6 +13,7 @@ services:
       DATABASE_USER: "root"
       DATABASE_PASSWORD: "secretpassword"
       DOCKER_API_VERSION: "v1.41"
+      DO_NOT_LOOK_FOR_UPDATE_BEFORE: 30
   #********************************************
   # DATABASE
   #********************************************
