@@ -8,4 +8,6 @@ RUN chmod +x /usr/local/bin/wait-until && chmod +x /app/entrypoint.sh  && chmod 
 ADD ./crontab /etc/cron.d/update-cron
 RUN chmod 0644 /etc/cron.d/update-cron && touch /var/log/update.log && chown -R www-data:www-data /app
 
+USER www-data
+
 CMD ["/app/entrypoint.sh"]
