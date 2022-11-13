@@ -21,7 +21,7 @@ class DockerClient
     public function listContainers(): array
     {
         $result = [];
-        $containers = $this->apiGetCall("containers/json", "all=true");
+        $containers = $this->apiGetCall("containers/json");
         $images = $this->apiGetCall("images/json", "digests=true");
 
         $imageCollection = new DockerImageCollection($images);
