@@ -13,6 +13,7 @@ class DockerImageCollection
         $this->records = [];
         if (is_array($images)) {
             foreach ($images as $image) {
+                if (!isset($image['RepoTags']) || count($image['RepoTags']) === 0) continue;
                 $id = $image['Id'];
                 $digest = explode("@", $image['RepoDigests'][0])[1];
                 $this->records[] = new DockerImage($id, $digest, DockerRepository::factory($image['RepoTags'][0]));
