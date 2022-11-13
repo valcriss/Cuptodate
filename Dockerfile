@@ -8,6 +8,6 @@ RUN chmod +x /usr/local/bin/wait-until && chmod +x /app/entrypoint.sh  && chmod 
 COPY crontab /etc/crontab
 
 RUN useradd -M cuptodate && usermod -a -G www-data cuptodate
-RUN chmod 0644 /etc/cron.d/update-cron && touch /var/log/update.log && chown -R cuptodate:www-data /app
+RUN chown -R cuptodate:www-data /app
 
 CMD ["/app/entrypoint.sh"]
