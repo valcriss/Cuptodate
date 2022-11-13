@@ -41,7 +41,7 @@ class DockerRepository
     {
         $hasNamespace = (strpos($repositoryTag, "/") !== false);
         $hasTag = (strpos($repositoryTag, ":") !== false);
-        $startingIndex = ($hasNamespace) ? strrpos($repositoryTag, "/") : 0;
+        $startingIndex = ($hasNamespace) ? strrpos($repositoryTag, "/") + 1 : 0;
         $endIndex = ($hasTag) ? strpos($repositoryTag, ":") : strlen($repositoryTag);
         return substr($repositoryTag, $startingIndex, $endIndex - $startingIndex);
     }
