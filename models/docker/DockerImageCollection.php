@@ -15,16 +15,20 @@ class DockerImageCollection
             foreach ($images as $image) {
                 $id = $image['Id'];
                 $digest = explode("@", $image['RepoDigests'][0])[1];
-                $this->records[] = new DockerImage($id, $digest, DockerRepository::factory(explode("@", $image['RepoDigests'][0])[0]));
+                $repositoryTag = explode("@", $image['RepoDigests'][0])[0];
+                if (isset($image['RepoTags']) && count($image['RepoTags']) > 0) {
+                    $repositoryTag = $image['RepoTags'][0];
+                }
+
+                $this->records[] = new DockerImage($id, $digest, DockerRepository::factory($repositoryTag));
             }
         }
     }
 
     public function get($id): ?DockerImage
     {
-        foreach($this->records as $record)
-        {
-            if($record->id === $id) return $record;
+        foreach ($this->records as $record) {
+            if ($record->id === $id) return $record;
         }
         return null;
     }

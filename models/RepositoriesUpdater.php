@@ -49,7 +49,7 @@ class RepositoriesUpdater
             $databaseRecord->lookupDate = null;
             $databaseRecord->remoteDigest = null;
         }
-        
+
         $databaseRecord->namespace = $repository->namespace;
         $databaseRecord->repository = $repository->repository;
         $databaseRecord->tag = $repository->tag;
