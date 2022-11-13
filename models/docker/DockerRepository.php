@@ -34,7 +34,7 @@ class DockerRepository
         if (!$hasNamespace) return "library";
         $tab = explode("/", $repositoryTag);
 
-        return $tab[count($tab) - 1];
+        return $tab[count($tab) - 2];
     }
 
     private static function getRepository(string $repositoryTag): string
