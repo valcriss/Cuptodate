@@ -20,10 +20,9 @@ class LookupRemoteUpdater
     private static function updateRepository(Repository $repository)
     {
         $remoteDigest = self::fetchDigest($repository->namespace, $repository->repository, $repository->tag);
-        if($remoteDigest === false) return;
+        if ($remoteDigest === false) return;
         $repository->lookupDate = (new \DateTime())->format("Y-m-d H:i:s");
-        if($repository->remoteDigest !== $remoteDigest)
-        {
+        if ($repository->remoteDigest !== $remoteDigest) {
             $repository->remoteDigest = $remoteDigest;
             $repository->updateDate = (new \DateTime())->format("Y-m-d H:i:s");
         }
@@ -39,7 +38,12 @@ class LookupRemoteUpdater
             if ($content === false) return false;
             foreach ($content->results as $result) {
                 if ($result->name === $tag) {
-                    return $result->digest;
+                    if (!property_exists($result, "digest") && property_exists($result, "images") && count($result->images) > 0) {
+                        return $result->images[0]->digest;
+                    } else {
+                        return $result->digest;
+                    }
+                    return false;
                 }
             }
             $page++;
