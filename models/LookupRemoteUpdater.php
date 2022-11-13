@@ -40,14 +40,13 @@ class LookupRemoteUpdater
             $content = self::apiCall($remoteApiUrl);
             if ($content === false) return false;
             foreach ($content->results as $result) {
+                if (property_exists($result, "tag_status") && $result->tag_status != "active") continue;
                 if ($result->name === $tag) {
                     if (!property_exists($result, "digest") && property_exists($result, "images") && count($result->images) > 0) {
                         return $result->images[0]->digest;
                     } else if (property_exists($result, "digest")) {
                         return $result->digest;
-                    }
-                    else
-                    {
+                    } else {
                         echo "$remoteApiUrl\n";
                     }
                     return false;
