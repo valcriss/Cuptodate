@@ -15,7 +15,7 @@ class LookupRemoteUpdater
         $repositories = Repository::find()->all();
         /** @var Repository[] $repositories */
         foreach ($repositories as $repository) {
-            if ($repository->lookupDate!==null  && (new \DateTime())->getTimestamp() - strtotime($repository->lookupDate) < self::DO_NOT_UPDATE_BEFORE) continue;
+            if ($repository->lookupDate !== null && (new \DateTime())->getTimestamp() - strtotime($repository->lookupDate) < self::DO_NOT_UPDATE_BEFORE) continue;
             self::updateRepository($repository);
         }
     }
@@ -43,8 +43,12 @@ class LookupRemoteUpdater
                 if ($result->name === $tag) {
                     if (!property_exists($result, "digest") && property_exists($result, "images") && count($result->images) > 0) {
                         return $result->images[0]->digest;
-                    } else {
+                    } else if (property_exists($result, "digest")) {
                         return $result->digest;
+                    }
+                    else
+                    {
+                        echo "$remoteApiUrl\n";
                     }
                     return false;
                 }
