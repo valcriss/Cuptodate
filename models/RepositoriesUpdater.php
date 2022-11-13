@@ -41,16 +41,19 @@ class RepositoriesUpdater
     private static function update(DockerRepository $repository)
     {
         $databaseRecord = Repository::find()->where(["name" => $repository->name])->one();
-        if ($databaseRecord !== null) return true;
+        if ($databaseRecord === null)
+        {
+            $databaseRecord = new Repository();
+            $databaseRecord->name = $repository->name;
+            $databaseRecord->creationDate = (new \DateTime())->format("Y-m-d H:i:s");
+        }
 
-        $databaseRecord = new Repository();
-        $databaseRecord->name = $repository->name;
+
         $databaseRecord->namespace = $repository->namespace;
         $databaseRecord->repository = $repository->repository;
         $databaseRecord->tag = $repository->tag;
         $databaseRecord->lookupDate = null;
         $databaseRecord->remoteDigest = null;
-        $databaseRecord->creationDate = (new \DateTime())->format("Y-m-d H:i:s");
         $databaseRecord->updateDate = (new \DateTime())->format("Y-m-d H:i:s");
 
         return $databaseRecord->save();

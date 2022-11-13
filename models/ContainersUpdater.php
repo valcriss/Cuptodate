@@ -38,17 +38,20 @@ class ContainersUpdater
 
     private static function update(DockerContainer $container)
     {
-        $databaseRecord = Container::find()->where(["containerId" => $container->id])->one();
-        if ($databaseRecord !== null) return true;
         $repository = Repository::find()->where(["name" => $container->repository->name])->one();
         /** @var Repository $repository */
         if ($repository === null) return false;
-        $databaseRecord = new Container();
-        $databaseRecord->containerId = $container->id;
+
+        $databaseRecord = Container::find()->where(["containerId" => $container->id])->one();
+        if ($databaseRecord === null) {
+            $databaseRecord = new Container();
+            $databaseRecord->containerId = $container->id;
+            $databaseRecord->creationDate = (new \DateTime())->format("Y-m-d H:i:s");
+        }
+
         $databaseRecord->name = $container->name;
         $databaseRecord->digest = $container->digest;
         $databaseRecord->repository_id = $repository->id;
-        $databaseRecord->creationDate = (new \DateTime())->format("Y-m-d H:i:s");
         $databaseRecord->updateDate = (new \DateTime())->format("Y-m-d H:i:s");
 
         return $databaseRecord->save();
