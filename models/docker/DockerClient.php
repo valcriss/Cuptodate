@@ -44,10 +44,12 @@ class DockerClient
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
         if (curl_errno($ch)) {
+            echo "api calls returned curl error : " . curl_error($ch) . "\n";
             return false;
         }
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if (intval($http_code) !== 200) {
+            echo "api calls returned httpcode $http_code : " . $result . "\n";
             return false;
         }
 

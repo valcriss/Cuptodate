@@ -37,7 +37,8 @@ class UpdateController extends Controller
                 ContainersUpdater::updateFromContainers($containers);
                 LookupRemoteUpdater::update();
             } catch (\Exception $e) {
-                echo "EXCEPTION:" . $e->getMessage() . "\n\n";
+                echo "EXCEPTION:" . $e->getMessage() . "\n";
+                echo $e->getTraceAsString() . "\n\n";
             }
             sleep($interval * 60);
         }
