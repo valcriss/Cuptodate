@@ -10,4 +10,6 @@ COPY crontab /etc/crontab
 RUN useradd cuptodate --home /home/cuptodate --create-home --groups www-data
 RUN chown -R cuptodate:www-data /app
 
+WORKDIR /app
+
 CMD ["/app/entrypoint.sh"]
