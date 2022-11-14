@@ -6,5 +6,6 @@ ADD https://raw.githubusercontent.com/nickjj/wait-until/v0.2.0/wait-until /usr/l
 RUN chmod +x /usr/local/bin/wait-until && chmod +x /app/entrypoint.sh  && chmod +x /app/yii && chmod +x /app/update.sh
 
 COPY update.conf /etc/supervisor/conf.d/update.conf
-
+COPY update.service /etc/systemd/system/update.service
+RUN systemctl daemon-reload
 CMD ["/app/entrypoint.sh"]

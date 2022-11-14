@@ -1,0 +1,12 @@
+[Unit]
+Description=Cuptodate Update
+After=network.target
+
+[Service]
+User=root
+Group=root
+ExecStart=/usr/bin/php /app/yii update
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
