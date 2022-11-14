@@ -4,4 +4,5 @@ wait-until "mysql -u ${DATABASE_USER} -p${DATABASE_PASSWORD} -h ${DATABASE_HOST}
 cd /app && composer install
 /app/yii migrate --interactive=0
 chown -R www-data:www-data /app
+service supervisor start
 apache2-foreground
