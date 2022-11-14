@@ -23,7 +23,10 @@ class DockerClient
         $result = [];
         $containers = $this->apiGetCall("containers/json");
         $images = $this->apiGetCall("images/json", "digests=true");
-
+        if ($containers === false || $images === false) {
+            echo "Error : Unable to access docker api\n";
+            return [];
+        }
         $imageCollection = new DockerImageCollection($images);
 
         foreach ($containers as $container) {

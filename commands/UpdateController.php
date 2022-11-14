@@ -40,6 +40,7 @@ class UpdateController extends Controller
                 echo "EXCEPTION:" . $e->getMessage() . "\n";
                 echo $e->getTraceAsString() . "\n\n";
             }
+            echo "Waiting " . ($interval * 60) . " seconds\n";
             sleep($interval * 60);
         }
     }
