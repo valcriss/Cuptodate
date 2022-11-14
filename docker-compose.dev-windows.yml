@@ -1,10 +1,11 @@
 version: '2'
 services:
   cuptodate:
-    image: danielsilvestre37/cuptodate:latest
+    build: .
     container_name: "cuptodate"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/app:delegated
+      - //var/run/docker.sock:/var/run/docker.sock
     ports:
       - '8001:80'
     environment:
@@ -20,7 +21,7 @@ services:
   #********************************************
   database:
     image: mysql:8.0
-    container_name: "cuptodate_database"
+    container_name: "database"
     ports:
       - 3306:3306
     environment:
