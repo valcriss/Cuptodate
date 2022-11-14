@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -27,14 +28,18 @@ class UpdateController extends Controller
 
     public function actionIndex()
     {
-        $client = new DockerClient();
-
-        $containers = $client->listContainers();
-
-        RepositoriesUpdater::updateFromContainers($containers);
-        ContainersUpdater::updateFromContainers($containers);
-        LookupRemoteUpdater::update();
-
-        return ExitCode::OK;
+        $interval = (getenv("INTERNAL_UPDATE_INTERVAL") !== null && is_int(getenv("INTERNAL_UPDATE_INTERVAL"))) ? intval(getenv("INTERNAL_UPDATE_INTERVAL")) : 5;
+        while (true) {
+            try {
+                $client = new DockerClient();
+                $containers = $client->listContainers();
+                RepositoriesUpdater::updateFromContainers($containers);
+                ContainersUpdater::updateFromContainers($containers);
+                LookupRemoteUpdater::update();
+            } catch (\Exception $e) {
+                echo "EXCEPTION:" . $e->getMessage() . "\n\n";
+            }
+            sleep($interval * 60);
+        }
     }
 }

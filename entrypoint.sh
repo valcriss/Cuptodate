@@ -4,6 +4,4 @@ wait-until "mysql -u ${DATABASE_USER} -p${DATABASE_PASSWORD} -h ${DATABASE_HOST}
 cd /app && composer install
 /app/yii migrate --interactive=0
 chown -R www-data:www-data /app
-crontab -r
-(crontab -l 2>/dev/null; echo "* * * * * /app/yii update") | crontab -
 apache2-foreground
