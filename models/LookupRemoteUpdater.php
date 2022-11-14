@@ -12,7 +12,7 @@ class LookupRemoteUpdater
 
     public static function update()
     {
-        $doNotLookForUpdateBefore = (getenv("DO_NOT_LOOK_FOR_UPDATE_BEFORE") !== null && is_int(getenv("DO_NOT_LOOK_FOR_UPDATE_BEFORE"))) ? intval(getenv("DO_NOT_LOOK_FOR_UPDATE_BEFORE")) : 30;
+        $doNotLookForUpdateBefore = (getenv("DO_NOT_LOOK_FOR_UPDATE_BEFORE") !== null) ? intval(getenv("DO_NOT_LOOK_FOR_UPDATE_BEFORE")) : 30;
         $repositories = Repository::find()->all();
         /** @var Repository[] $repositories */
         foreach ($repositories as $repository) {

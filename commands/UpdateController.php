@@ -28,7 +28,7 @@ class UpdateController extends Controller
 
     public function actionIndex()
     {
-        $interval = (getenv("INTERNAL_UPDATE_INTERVAL") !== null && is_int(getenv("INTERNAL_UPDATE_INTERVAL"))) ? intval(getenv("INTERNAL_UPDATE_INTERVAL")) : 5;
+        $interval = (getenv("INTERNAL_UPDATE_INTERVAL") !== null) ? intval(getenv("INTERNAL_UPDATE_INTERVAL")) : 5;
         while (true) {
             try {
                 $client = new DockerClient();
