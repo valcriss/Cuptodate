@@ -14,6 +14,7 @@ class DockerImageCollection
         if (is_array($images)) {
             foreach ($images as $image) {
                 $id = $image['Id'];
+                if(!isset($image['RepoDigests']) || count($image['RepoDigests'])===0) continue;
                 $digest = explode("@", $image['RepoDigests'][0])[1];
                 $repositoryTag = explode("@", $image['RepoDigests'][0])[0];
                 if (isset($image['RepoTags']) && count($image['RepoTags']) > 0) {
